@@ -1,4 +1,4 @@
-import { http } from "msw";
+import { HttpResponse, http } from "msw";
 import { v4 as uuid } from "uuid";
 const users = [
   {

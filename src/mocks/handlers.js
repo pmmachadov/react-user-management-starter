@@ -31,9 +31,9 @@ const users = [
 ];
 const handlers = [
   // Mock GET request to retrieve a list of users
-  http.get("/api/users", (req, res, ctx) => {
+  http.get("/api/users", () => {
     // Mock response data with a list of users
-    return res(ctx.json(users));
+    return HttpResponse.json(users);
   }),
 
   // Mock POST request to add a new user

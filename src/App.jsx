@@ -1,9 +1,7 @@
-import "./App.css";
 import Users from "./components/Users";
-
 function App() {
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <Users />
     </div>
   );

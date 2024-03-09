@@ -1,32 +1,62 @@
 import { http } from "msw";
-
+import { v4 as uuid } from "uuid";
+const users = [
+  {
+    id: uuid(),
+    firstName: "fname1",
+    lastName: "lName1",
+    birthDay: new Date(1999, 12, 25),
+    gender: "male",
+    isAdmin: true,
+    isFunny: true,
+  },
+  {
+    id: uuid(),
+    firstName: "fname2",
+    lastName: "lName2",
+    birthDay: new Date(1997, 11, 19),
+    gender: "female",
+    isAdmin: false,
+    isFunny: true,
+  },
+  {
+    id: uuid(),
+    firstName: "fname3",
+    lastName: "lName3",
+    birthDay: new Date(2000, 12, 1),
+    gender: "non-binary",
+    isAdmin: false,
+    isFunny: true,
+  },
+];
 const handlers = [
   // Mock GET request to retrieve a list of users
   http.get("/api/users", (req, res, ctx) => {
     // Mock response data with a list of users
-    return res(
-      ctx.json([
-        { id: 1, username: "user1" },
-        { id: 2, username: "user2" },
-        // Add more user objects as needed
-      ])
-    );
+    return res(ctx.json(users));
   }),
 
   // Mock POST request to add a new user
   http.post("/api/users", (req, res, ctx) => {
-    const { username } = req.body;
+    const { firstName, lastName, birthDay, gender, isAdmin, isFunny } =
+      req.body;
     // Validate the username (for demonstration purposes)
-    if (!username || username.trim() === "") {
+    if (!firstName || !lastName || !birthDay || !gender) {
       return res(
         ctx.status(400), // Bad Request
-        ctx.json({ message: "Username is required" })
+        ctx.json({ message: "Please provide all Data..." })
       );
     }
     // Mock a successful response with the newly added user
     return res(
       ctx.status(201), // Created
-      ctx.json({ id: Math.random(), username }) // Assign a random ID for simplicity
+
+      ctx.json({
+        id: uuid(),
+        ...req.body,
+        isAdmin: isAdmin || false,
+        isFunny: isFunny || true,
+      }) // Assign a random ID for simplicity
     );
   }),
 

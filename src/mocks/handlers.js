@@ -37,26 +37,26 @@ const handlers = [
   }),
 
   // Mock POST request to add a new user
-  http.post("/api/users", (req, res, ctx) => {
-    const { firstName, lastName, birthDay, gender, isAdmin, isFunny } =
-      req.body;
+  http.post("/api/users", async ({ request }) => {
+    const body = await request.json();
+    const { firstName, lastName, birthDay, gender, isAdmin, isFunny } = body;
+
     // Validate the username (for demonstration purposes)
     if (!firstName || !lastName || !birthDay || !gender) {
-      return res(
-        ctx.status(400), // Bad Request
-        ctx.json({ message: "Please provide all Data..." })
-      );
+      return new HttpResponse(null, {
+        status: 400,
+        statusText: "Please provide all Data...",
+      });
     }
     // Mock a successful response with the newly added user
-    return res(
-      ctx.status(201), // Created
-
-      ctx.json({
+    return HttpResponse.json(
+      {
         id: uuid(),
-        ...req.body,
+        ...body,
         isAdmin: isAdmin || false,
         isFunny: isFunny || true,
-      }) // Assign a random ID for simplicity
+      },
+      { status: 201 }
     );
   }),
 

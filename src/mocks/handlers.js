@@ -1,42 +1,15 @@
 import { HttpResponse, http } from "msw";
 import { v4 as uuid } from "uuid";
-const users = [
-  {
-    id: uuid(),
-    firstName: "fname1",
-    lastName: "lName1",
-    birthDay: new Date(1999, 12, 25),
-    gender: "male",
-    isAdmin: true,
-    isFunny: true,
-  },
-  {
-    id: uuid(),
-    firstName: "fname2",
-    lastName: "lName2",
-    birthDay: new Date(1997, 11, 19),
-    gender: "female",
-    isAdmin: false,
-    isFunny: true,
-  },
-  {
-    id: uuid(),
-    firstName: "fname3",
-    lastName: "lName3",
-    birthDay: new Date(2000, 12, 1),
-    gender: "non-binary",
-    isAdmin: false,
-    isFunny: true,
-  },
-];
-const formatBirthDay = (date) => date.toISOString().split('T')[0];
+import { users } from "../utils/UserProfiles";
+import { formatBirthDay } from "../utils/dateUtils";
+
 
 const handlers = [
   http.get("/api/users", () => {
     // Map through users to format birthDay before sending
     const modifiedUsers = users.map(user => ({
       ...user,
-      birthDay: formatBirthDay(user.birthDay), // This line formats the birthDay
+      birthDay: formatBirthDay(user.birthDay),
     }));
     return HttpResponse.json(modifiedUsers);
   }),

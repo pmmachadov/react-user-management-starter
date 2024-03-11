@@ -28,4 +28,13 @@ export const users = [
         isAdmin: false,
         isFunny: true,
     },
+    {
+        id: uuid(),
+        firstName: "fname4",
+        lastName: "lName4",
+        birthDay: new Date(1995, 10, 15),
+        gender: "female",
+        isAdmin: false,
+        isFunny: true,
+    }
 ];

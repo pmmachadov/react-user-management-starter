@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Modal } from './Modal';
 
@@ -15,41 +15,48 @@ const UsersWrapper = () => {
     });
 
     useEffect(() => {
-        fetch('/api/users')
-            .then(response => response.json())
-            .then(data => {
+        const fetchUsers = async () => {
+            try {
+                const response = await fetch('/api/users');
+                const data = await response.json();
                 console.log(data);
                 setUsers(data);
-            })
-            .catch(error => console.error("Error fetching users:", error));
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        };
+
+        fetchUsers();
     }, []);
+
 
     const toggleModal = () => setIsModalOpen(!isModalOpen);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch('/api/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Failed to add user.');
-            })
-            .then(newUser => {
-                setUsers(currentUsers => [...currentUsers, newUser]);
-                toast.success('User added successfully!');
-                setIsModalOpen(false);
-            })
-            .catch(error => {
-                console.error("Error adding user:", error);
-                toast.error(error.toString());
+
+        try {
+
+            const response = await fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             });
+
+            if (!response.ok) {
+                throw new Error('Failed to add user.');
+            }
+
+            const newUser = await response.json();
+            setUsers(currentUsers => [...currentUsers, newUser]);
+            toast.success('User added successfully!');
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error("Error adding user:", error);
+            toast.error(error.toString());
+        }
     };
 
     const onChange = (e) => {
@@ -62,8 +69,17 @@ const UsersWrapper = () => {
 
     return (
         <div className="container my-4">
-            <Modal isOpen={ isModalOpen } onClose={ toggleModal } formData={ formData } onChange={ onChange } onSubmit={ handleSubmit } />
-            <button type="button" onClick={ toggleModal } className="btn btn-dark mb-3">Add User</button>
+            <Modal
+                isOpen={ isModalOpen }
+                onClose={ toggleModal }
+                formData={ formData }
+                onChange={ onChange }
+                onSubmit={ handleSubmit } />
+            <button
+                type="button"
+                onClick={ toggleModal }
+                className="btn btn-dark mb-3"
+            >Add User</button>
             <div className="table-responsive">
                 <table className="table table-dark table-striped table-hover">
                     <thead className="thead-dark">

@@ -2,17 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const Modal = ({ isOpen, onClose, onSubmit, formData, onChange }) => {
-    if (!isOpen) return null;
+    if (!isOpen) return null; // If the modal is not open, don't render anything
 
     return (
         <div className="modal show d-block" style={ { backgroundColor: 'rgba(0, 0, 0, 0.5)' } }>
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
+
                     <form onSubmit={ onSubmit }>
+
                         <div className="modal-header">
                             <h5 className="modal-title">Fill the form</h5>
-                            <button type="button" className="btn-close" onClick={ onClose }></button>
+                            <button type="button" className="close" aria-label="Close" onClick={ onClose }>
+                                <span aria-hidden="true">&times;</span> // aria-hidden is used to hide the close button from screen readers
+                            </button>
                         </div>
+
                         <div className="modal-body">
                             <div className="mb-3">
                                 <input
@@ -62,9 +67,10 @@ export const Modal = ({ isOpen, onClose, onSubmit, formData, onChange }) => {
                                     name="isAdmin"
                                     checked={ formData.isAdmin }
                                     onChange={ onChange }
+                                    id="isAdminCheckbox"
                                 />
-                                <label className="form-check-label">
-                                    Is Admin
+                                <label className="form-check-label" htmlFor="isAdminCheckbox">
+                                    Admin
                                 </label>
                             </div>
                             <div className="mb-3 form-check">
@@ -74,8 +80,9 @@ export const Modal = ({ isOpen, onClose, onSubmit, formData, onChange }) => {
                                     name="isFunny"
                                     checked={ formData.isFunny }
                                     onChange={ onChange }
+                                    id="isFunnyCheckbox"
                                 />
-                                <label className="form-check-label">
+                                <label className="form-check-label" htmlFor="isFunnyCheckbox">
                                     Is Funny
                                 </label>
                             </div>

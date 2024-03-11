@@ -61,9 +61,9 @@ const UsersWrapper = () => {
     };
 
     return (
-        <div>
+        <div className="container my-4">
             <Modal isOpen={ isModalOpen } onClose={ toggleModal } formData={ formData } onChange={ onChange } onSubmit={ handleSubmit } />
-            <button type="button" onClick={ toggleModal } className="btn btn-dark">Add User</button>
+            <button type="button" onClick={ toggleModal } className="btn btn-dark mb-3">Add User</button>
             <div className="table-responsive">
                 <table className="table table-dark table-striped table-hover">
                     <thead className="thead-dark">

@@ -5,62 +5,87 @@ export const Modal = ({ isOpen, onClose, onSubmit, formData, onChange }) => {
     if (!isOpen) return null;
 
     return (
-        <div style={ { position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, background: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' } }>
-            <div style={ { background: 'white', padding: 20, borderRadius: '8px' } }>
-                <form onSubmit={ onSubmit }>
-                    <input
-                        type="text"
-                        name="firstName"
-                        placeholder="First Name"
-                        value={ formData.firstName }
-                        onChange={ onChange }
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="lastName"
-                        placeholder="Last Name"
-                        value={ formData.lastName }
-                        onChange={ onChange }
-                        required
-                    />
-                    <input
-                        type="date"
-                        name="birthDay"
-                        placeholder="Birth Day"
-                        value={ formData.birthDay }
-                        onChange={ onChange }
-                        required
-                    />
-                    <select name="gender" value={ formData.gender } onChange={ onChange } required>
-                        <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="non-binary">Non-binary</option>
-                    </select>
-                    <label>
-                        Is Admin:
-                        <input
-                            type="checkbox"
-                            name="isAdmin"
-                            checked={ formData.isAdmin }
-                            onChange={ onChange }
-                        />
-                    </label>
-                    <label>
-                        Is Funny:
-                        <input
-                            type="checkbox"
-                            name="isFunny"
-                            checked={ formData.isFunny }
-                            onChange={ onChange }
-                        />
-                    </label>
-                    <div>
-                        <button type="submit">Submit</button>
-                        <button type="button" onClick={ onClose }>Close</button>
-                    </div>
-                </form>
+        <div className="modal show d-block" style={ { backgroundColor: 'rgba(0, 0, 0, 0.5)' } }>
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                    <form onSubmit={ onSubmit }>
+                        <div className="modal-header">
+                            <h5 className="modal-title">Fill the form</h5>
+                            <button type="button" className="btn-close" onClick={ onClose }></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="firstName"
+                                    placeholder="First Name"
+                                    value={ formData.firstName }
+                                    onChange={ onChange }
+                                    required
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    name="lastName"
+                                    placeholder="Last Name"
+                                    value={ formData.lastName }
+                                    onChange={ onChange }
+                                    required
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    name="birthDay"
+                                    placeholder="Birth Day"
+                                    value={ formData.birthDay }
+                                    onChange={ onChange }
+                                    required
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <select className="form-select" name="gender" value={ formData.gender } onChange={ onChange } required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="non-binary">Non-binary</option>
+                                </select>
+                            </div>
+                            <div className="mb-3 form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    name="isAdmin"
+                                    checked={ formData.isAdmin }
+                                    onChange={ onChange }
+                                />
+                                <label className="form-check-label">
+                                    Is Admin
+                                </label>
+                            </div>
+                            <div className="mb-3 form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    name="isFunny"
+                                    checked={ formData.isFunny }
+                                    onChange={ onChange }
+                                />
+                                <label className="form-check-label">
+                                    Is Funny
+                                </label>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                            <button type="button" className="btn btn-secondary" onClick={ onClose }>Close</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );

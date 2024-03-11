@@ -29,11 +29,16 @@ const users = [
     isFunny: true,
   },
 ];
+const formatBirthDay = (date) => date.toISOString().split('T')[0];
+
 const handlers = [
-  // Mock GET request to retrieve a list of users
   http.get("/api/users", () => {
-    // Mock response data with a list of users
-    return HttpResponse.json(users);
+    // Map through users to format birthDay before sending
+    const modifiedUsers = users.map(user => ({
+      ...user,
+      birthDay: formatBirthDay(user.birthDay), // This line formats the birthDay
+    }));
+    return HttpResponse.json(modifiedUsers);
   }),
 
   // Mock POST request to add a new user
